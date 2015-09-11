@@ -69,7 +69,7 @@ implements OnClickListener, OnItemClickListener {
         startTimer();
 
         mPrefs = getSharedPreferences("mPrefs", MODE_PRIVATE);
-        downloadFeed = mPrefs.getInt("downloadFeed", downloadFeed);
+        downloadFeed = mPrefs.getInt("downloadFeed", downloadFeed++);
 
     }
 
@@ -201,7 +201,7 @@ implements OnClickListener, OnItemClickListener {
     protected void onResume() {
         super.onResume();
 
-        downloadFeed = mPrefs.getInt("downloadFeed", downloadFeed);
+        downloadFeed = mPrefs.getInt("downloadFeed", downloadFeed++);
 
 
         startMillis = System.currentTimeMillis();
@@ -228,12 +228,12 @@ implements OnClickListener, OnItemClickListener {
 
             @Override
             public void run() {
-                    if(canceled == false) {
+                    if(!canceled) {
                         Thread.currentThread().run();
                         messageTextView.setText("Seconds: " + (elapsedSeconds) + System.getProperty("line.separator") + "File has downloaded " + downloadFeed + " times.");
 
                     }
-                    if(canceled == true){
+                    if(canceled){
                         Thread.currentThread().interrupt();
                     }
 
